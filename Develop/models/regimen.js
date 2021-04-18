@@ -21,16 +21,16 @@ const regimenSchema = new Schema({
             weight: {
                 type: Number
             },
-            Sets: {
+            sets: {
                 type: Number
             },
-            Reps: {
+            reps: {
                 type: Number
             },
-            Duration: {
+            duration: {
                 type: Number
             },
-            Distance: {
+            distance: {
                 type: Number
             }
         }
@@ -40,4 +40,4 @@ const regimenSchema = new Schema({
 
 const Regimen = mongoose.model("Regimen", regimenSchema);
 
-module.exports = Note;
+module.exports = Regimen;
