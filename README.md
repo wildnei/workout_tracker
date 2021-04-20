@@ -15,7 +15,7 @@ https://wildnei.github.io/javascript-questionary/
 
 # Technologies used 
 
- HTML
+- [x] HTML
 - [x] Javascript
 - [x] Mongodb
 - [x] Mongoose
