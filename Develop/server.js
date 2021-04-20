@@ -8,6 +8,8 @@ const db = require("./models")
 
 app.use(morgan("dev"));
 
+const Workout = require("./models")
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(express.static("public"));

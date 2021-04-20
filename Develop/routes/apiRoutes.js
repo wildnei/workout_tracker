@@ -1,58 +1,61 @@
-var path = require("path")
+const Workout = require("../models/workout")
 var db = require("../models");
+var path = require("path");
 
 module.exports = function (app) {
 
-    app.get("/", function (req, res) {
-        res.sendFile(path.join(__dirname, "../public/index.html"));
-    });
-
-    app.get("/stats", function (req, res) {
-        res.sendFile(path.join(__dirname, "../public/stats.html"));
-    });
-    
-    app.get("/exercise", function (req, res) {
-        res.sendFile(path.join(__dirname, "../public/exercise.html"));
-    });
-
     app.get("/api/workouts", function (req, res) {
-        db.regimen.find({})
-            .then(dbWorkout => {
-                res.json(dbWorkout);
+        Workout.find({})
+            .then(workouts => {
+                res.json(workouts);
             })
             .catch(err => {
                 res.json(err);
             });
     });
 
-    app.put("/api/workouts/:id", function ({ body, params }, res) {
-        db.regimen.findByIdAndUpdate(
-            params.id,
-            { $push: { exercises: body } },
-            { new: true }
-        )
-            .then(dbWorkout => {
-                res.json(dbWorkout);
+    app.get("/stats", (req, res) => {
+        res.sendFile(path.join(__dirname + "./../public/stats.html"))
+    })
+
+
+    app.put("/api/workouts/:id", ({ body, params }, res) => {
+        Workout.findByIdAndUpdate(params.id,
+            { $push: { exercises: body } }, { new: true })
+            .then(workoutDB => {
+                res.json(workoutDB);
             })
             .catch(err => {
-                res.json(err);
+                res.status(400).json(err);
             });
     });
 
-    app.post("/api/workouts", (req, res) => {
-        db.regimen.create({})
-            .then(dbWorkout => {
-                res.json(dbWorkout);
+    app.post("/api/workouts", ({ body }, res) => {
+        Workout.create(body)
+            .then(workoutDB => {
+                res.json(workoutDB);
             })
             .catch(err => {
-                res.json(err);
+                res.status(400).json(err);
             });
     });
+
+   
+    app.delete("/api/workouts", ({ body }, res) => {
+        Workout.findByIdAndRemove(body.id)
+            .then(() => {
+                res.json(true);
+            })
+            .catch(err => {
+                res.status(400).json(err);
+            });
+    });
+
 
     app.get("/api/workouts/range", function (req, res) {
-        db.regimen.find({}).limit(5)
-            .then(dbWorkout => {
-                res.json(dbWorkout);
+        Workout.find({}).limit(10)
+            .then(workouts => {
+                res.json(workouts);
             })
             .catch(err => {
                 res.json(err);
