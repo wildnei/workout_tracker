@@ -1,6 +1,6 @@
 # Link for deployed application
 
-https://wildnei.github.io/javascript-questionary/
+https://morning-dusk-08530.herokuapp.com/
 
 
 # How to use 🎲
